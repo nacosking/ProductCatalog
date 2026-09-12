@@ -1,5 +1,6 @@
 package com.example.product_catalog
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -49,6 +50,11 @@ class ProductInfo : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Product not found", Toast.LENGTH_SHORT).show()
 
+        }
+
+        backBtn.setOnClickListener { view ->
+            val intent = Intent(this, MainPage::class.java)
+            startActivity(intent)
         }
     }
 
