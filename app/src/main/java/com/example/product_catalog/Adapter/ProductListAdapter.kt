@@ -1,9 +1,12 @@
-package com.example.product_catalog
+package com.example.product_catalog.Adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.product_catalog.Product
+import com.example.product_catalog.R
 
 class ProductListAdapter(
     private val onProductClick: (Product) -> Unit
@@ -11,7 +14,7 @@ class ProductListAdapter(
 
     private val products = mutableListOf<Product>()
 
-    inner class ProductViewHolder(itemView: android.view.View) : RecyclerView.ViewHolder(itemView) {
+    inner class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val title = itemView.findViewById<TextView>(R.id.productName)
         private val price = itemView.findViewById<TextView>(R.id.productPrice)
         private val rating = itemView.findViewById<TextView>(R.id.productRating)
