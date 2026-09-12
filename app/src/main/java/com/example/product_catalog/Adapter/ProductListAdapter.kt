@@ -3,8 +3,10 @@ package com.example.product_catalog.Adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.product_catalog.model.Product
 import com.example.product_catalog.R
 
@@ -15,6 +17,7 @@ class ProductListAdapter(
     private val products = mutableListOf<Product>()
 
     inner class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val image = itemView.findViewById<ImageView>(R.id.productImage)
         private val title = itemView.findViewById<TextView>(R.id.productName)
         private val price = itemView.findViewById<TextView>(R.id.productPrice)
         private val rating = itemView.findViewById<TextView>(R.id.productRating)
@@ -23,6 +26,12 @@ class ProductListAdapter(
             title.text = product.title
             price.text = "%.2f".format(product.price)
             rating.text = "%.2f".format(product.rating)
+
+            image.load(product.thumbnail){
+                crossfade(true)
+                placeholder(android.R.drawable.ic_menu_gallery)
+                error(android.R.drawable.ic_dialog_alert)
+            }
 
             itemView.setOnClickListener {
                 onProductClick(product)

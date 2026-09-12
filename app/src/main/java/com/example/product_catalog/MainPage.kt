@@ -45,7 +45,7 @@ class MainPage : AppCompatActivity() {
         }
 
         productRecyclerView.apply {
-            layoutManager = GridLayoutManager (this@MainPage, 1)
+            layoutManager = GridLayoutManager (this@MainPage, 2)
             adapter = this@MainPage.adapter
 
             addOnScrollListener(PaginationScroll())

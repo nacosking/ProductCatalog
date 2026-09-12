@@ -45,6 +45,7 @@ dependencies {
 
 
     implementation("androidx.cardview:cardview:1.0.0")
+    implementation("io.coil-kt:coil:2.5.0")
 
     //API
     implementation("com.squareup.retrofit2:retrofit:2.10.0")
