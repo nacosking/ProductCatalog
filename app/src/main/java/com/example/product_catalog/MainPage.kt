@@ -5,13 +5,20 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.product_catalog.API.APIRespond
+import com.example.product_catalog.API.ProductAPIService
 import com.example.product_catalog.Adapter.ProductListAdapter
+import com.example.product_catalog.model.Product
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainPage : AppCompatActivity() {
 
     private lateinit var productRecyclerView: RecyclerView
     private lateinit var searchBox: EditText
     private lateinit var adapter: ProductListAdapter
+    private var respond = APIRespond()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +27,7 @@ class MainPage : AppCompatActivity() {
         productRecyclerView = findViewById(R.id.productRecyclerView)
 
         RecyclerView()
-        loadMockData()
+        loadProductsFromAPI()
     }
 
     private fun RecyclerView(){
@@ -34,16 +41,18 @@ class MainPage : AppCompatActivity() {
         }
     }
 
-    private fun loadMockData() {
-        val mockProducts = listOf(
-            Product(1, "Wireless Headphones", 59.99, "https://via.placeholder.com/200", 4.5, 100),
-            Product(2, "Phone Case", 15.99, "https://via.placeholder.com/200", 4.2, 200),
-            Product(3, "USB Cable", 9.99, "https://via.placeholder.com/200", 4.7, 500),
-            Product(4, "Screen Protector", 12.99, "https://via.placeholder.com/200", 4.3, 300),
-            Product(5, "Phone Stand", 19.99, "https://via.placeholder.com/200", 4.6, 150),
-            Product(6, "Charger", 29.99, "https://via.placeholder.com/200", 4.4, 250)
-        )
+    private fun loadProductsFromAPI() {
+        CoroutineScope(Dispatchers.Main).launch {
+            val result = respond.getProducts(limit = 20, skip = 0)
 
-        adapter.submitList(mockProducts)
+            result.onSuccess { response ->
+                adapter.submitList(response.products)
+            }
+
+            result.onFailure { error ->
+
+            }
+
+        }
     }
 }
