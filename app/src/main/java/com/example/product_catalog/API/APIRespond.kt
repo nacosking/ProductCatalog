@@ -1,6 +1,7 @@
 package com.example.product_catalog.API
 
 
+import com.example.product_catalog.model.Product
 import com.example.product_catalog.model.ProductsInAPI
 
 class APIRespond {
@@ -10,6 +11,15 @@ class APIRespond {
         return try {
             val response = apiService.getProducts(limit, skip)
             Result.success(response)
+        } catch (e: Exception){
+            Result.failure(e)
+        }
+    }
+
+    suspend fun  getProductsDetail(productId: Int): Result<Product>{
+        return try {
+            val product = apiService.getProductsDetails(productId)
+            Result.success(product)
         } catch (e: Exception){
             Result.failure(e)
         }

@@ -1,9 +1,12 @@
 package com.example.product_catalog
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -41,7 +44,10 @@ class MainPage : AppCompatActivity() {
 
     private fun RecyclerView(){
         adapter = ProductListAdapter { product ->
-
+            val intent = Intent(this, ProductInfo::class.java)
+            intent.putExtra("PRODUCT_ID", product.id)
+            Log.d("Product ID", product.id.toString())
+            startActivity(intent)
         }
 
         productRecyclerView.apply {
