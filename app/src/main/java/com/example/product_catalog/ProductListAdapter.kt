@@ -18,8 +18,8 @@ class ProductListAdapter(
 
         fun bind(product: Product) {
             title.text = product.title
-            price.text = String.format("%.2f", product.price)
-            rating.text = String.format("%.f", product.rating)
+            price.text = "%.2f".format(product.price)
+            rating.text = "%.2f".format(product.rating)
 
             itemView.setOnClickListener {
                 onProductClick(product)
