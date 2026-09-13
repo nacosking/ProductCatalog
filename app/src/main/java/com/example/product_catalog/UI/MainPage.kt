@@ -211,7 +211,8 @@ class MainPage : AppCompatActivity() {
 
             if (visibileItemCount + firstVisibleItemPositions >= totalItemCount
                 && firstVisibleItemPositions >= 0
-                && !isLoading) {
+                && !isLoading
+                && !isSearching) {
 
                 loadProductsFromAPI()
 
