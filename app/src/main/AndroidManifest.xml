@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Product_Catalog">
         <activity
-            android:name=".MainPage"
+            android:name=".UI.MainPage"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProductInfo"
+            android:name=".UI.ProductInfo"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
     </application>

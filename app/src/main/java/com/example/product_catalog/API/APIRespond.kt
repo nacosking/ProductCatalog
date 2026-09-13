@@ -24,4 +24,13 @@ class APIRespond {
             Result.failure(e)
         }
     }
+
+    suspend fun searchProducts(query: String): Result<ProductsInAPI>{
+        return try {
+            val response = apiService.searchProduct(query)
+            Result.success(response)
+        } catch (e: Exception){
+            Result.failure(e)
+        }
+    }
 }

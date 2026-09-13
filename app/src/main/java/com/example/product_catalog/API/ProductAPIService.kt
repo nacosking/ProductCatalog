@@ -19,4 +19,9 @@ interface ProductAPIService {
     suspend fun getProductsDetails(
         @Path("id") productId: Int
     ): Product
+
+    @GET("products/search")
+    suspend fun  searchProduct(
+        @Query("q") query: String
+    ): ProductsInAPI
 }

@@ -1,4 +1,4 @@
-package com.example.product_catalog
+package com.example.product_catalog.UI
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,11 +10,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.example.product_catalog.API.APIRespond
+import com.example.product_catalog.R
 import com.example.product_catalog.model.Product
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
 
 class ProductInfo : AppCompatActivity() {
 
