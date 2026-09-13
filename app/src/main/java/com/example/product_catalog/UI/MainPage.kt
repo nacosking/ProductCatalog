@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.product_catalog.API.APIRespond
 import com.example.product_catalog.Adapter.ProductListAdapter
 import com.example.product_catalog.R
@@ -33,6 +34,7 @@ class MainPage : AppCompatActivity() {
     private lateinit var emptyContainer: LinearLayout
     private lateinit var errorMessage: TextView
     private lateinit var retryButton: Button
+    private lateinit var swipeToRefresh: SwipeRefreshLayout
 
     private lateinit var adapter: ProductListAdapter
     private var respond = APIRespond()
@@ -57,8 +59,29 @@ class MainPage : AppCompatActivity() {
         emptyContainer = findViewById(R.id.emptyContainer)
         errorMessage = findViewById(R.id.errorMessage)
         retryButton = findViewById(R.id.retryButton)
+        swipeToRefresh = findViewById(R.id.swipeRefreshLayout)
 
         searchDebouncer = SearchDebouncer(300, CoroutineScope(Dispatchers.Main))
+
+        retryButton.setOnClickListener {
+            if (isSearching) {
+                val query = searchView.query.toString()
+                performSearch(query)
+            } else {
+                loadProductsFromAPI()
+            }
+        }
+
+        swipeToRefresh.setOnRefreshListener {
+            currentSkip = 0
+            hasMoreProducts = true
+            if (isSearching) {
+                val query = searchView.query.toString()
+                performSearch(query)
+            } else {
+                loadProductsFromAPI()
+            }
+        }
 
         RecyclerView()
         loadProductsFromAPI()
@@ -162,7 +185,10 @@ class MainPage : AppCompatActivity() {
     }
 
     private fun loadProductsFromAPI() {
-        if (isLoading || !hasMoreProducts) return
+        if (isLoading || !hasMoreProducts) {
+            swipeToRefresh.isRefreshing = false
+            return
+        }
 
         isLoading = true
         if (currentSkip == 0) {
@@ -173,6 +199,7 @@ class MainPage : AppCompatActivity() {
             val result = respond.getProducts(limit = pageLimit, skip = currentSkip)
 
             result.onSuccess { response ->
+                swipeToRefresh.isRefreshing = false
                 if (currentSkip == 0) {
                     if (response.products.isEmpty()) {
                         updateState(UiState.Empty<List<Product>>())
@@ -191,6 +218,7 @@ class MainPage : AppCompatActivity() {
             }
 
             result.onFailure { error ->
+                swipeToRefresh.isRefreshing = false
                 isLoading = false
                 loadMore.visibility = View.GONE
                 if (currentSkip == 0) {

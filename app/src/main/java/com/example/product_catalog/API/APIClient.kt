@@ -9,7 +9,7 @@ object APIClient {
     private const val BASE_URL = "https://dummyJSON.com/"
     private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
-        . addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create())
         .build()
 
     val productAPIService: ProductAPIService = retrofit.create(ProductAPIService::class.java)
